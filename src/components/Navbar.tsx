@@ -33,286 +33,252 @@ const Navbar: React.FC = () => {
   return (
     <>
       <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600;700&family=Inter:wght@400;500;600&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Inter:wght@400;500;600&display=swap');
 
-        #gs-navbar {
+        #nx-navbar {
           position: sticky;
           top: 0;
           z-index: 1000;
-          background: linear-gradient(90deg, #0d0a05 0%, #1a1209 100%);
-          border-bottom: 1px solid rgba(184,134,11,0.25);
-          transition: box-shadow 0.3s, background 0.3s;
+          background: #0a1628;
+          border-bottom: 1px solid rgba(255,255,255,0.06);
+          transition: box-shadow 0.3s, background 0.3s, padding 0.25s;
           font-family: 'Inter', sans-serif;
         }
-        #gs-navbar.scrolled {
-          background: rgba(13,10,5,0.96);
-          backdrop-filter: blur(12px);
-          -webkit-backdrop-filter: blur(12px);
-          box-shadow: 0 4px 28px rgba(0,0,0,0.5);
-        }
-        #gs-navbar:not(.scrolled) {
-          box-shadow: none;
+        #nx-navbar.scrolled {
+          background: rgba(8,18,36,0.85);
+          backdrop-filter: blur(16px) saturate(160%);
+          -webkit-backdrop-filter: blur(16px) saturate(160%);
+          box-shadow: 0 8px 32px rgba(0,0,0,0.35);
+          border-bottom: 1px solid rgba(56,189,248,0.15);
         }
 
-        /* Brand */
-        .gs-brand {
-          font-family: 'Cormorant Garamond', serif;
+        .nx-brand {
+          font-family: 'Plus Jakarta Sans', sans-serif;
           font-size: 1.5rem;
           font-weight: 700;
           color: #fff !important;
           text-decoration: none;
-          letter-spacing: 0.04em;
           display: flex;
           align-items: center;
-          gap: 0.5rem;
+          gap: 0.65rem;
         }
-        .gs-brand .crown {
+        .nx-brand .mark {
           width: 38px;
           height: 38px;
-          background: linear-gradient(135deg, #b8860b, #d4a017);
-          border-radius: 8px;
+          background: linear-gradient(135deg, #2563eb, #38bdf8);
+          border-radius: 10px;
           display: flex;
           align-items: center;
           justify-content: center;
-          font-size: 1.1rem;
           flex-shrink: 0;
-          box-shadow: 0 2px 10px rgba(184,134,11,0.45);
+          box-shadow: 0 4px 16px rgba(37,99,235,0.45);
+          position: relative;
+          overflow: hidden;
         }
-        .gs-brand .brand-text {
+        .nx-brand .mark::after {
+          content: '';
+          position: absolute;
+          inset: 0;
+          background: linear-gradient(135deg, rgba(255,255,255,0.25), transparent 60%);
+        }
+        .nx-brand .mark i {
+          font-size: 1.05rem;
+          color: #fff;
+          position: relative;
+          z-index: 1;
+        }
+        .nx-brand .brand-text {
           display: flex;
           flex-direction: column;
-          line-height: 1.1;
+          line-height: 1.05;
         }
-        .gs-brand .brand-the {
+        .nx-brand .brand-tag {
           font-family: 'Inter', sans-serif;
-          font-size: 0.6rem;
+          font-size: 0.58rem;
           font-weight: 600;
-          letter-spacing: 0.22em;
-          color: #d4a017;
+          letter-spacing: 0.2em;
+          color: #38bdf8;
           text-transform: uppercase;
         }
-        .gs-brand .brand-name {
-          font-size: 1.45rem;
+        .nx-brand .brand-name {
+          font-size: 1.32rem;
           color: #fff;
+          letter-spacing: -0.01em;
         }
-        .gs-brand .brand-name span { color: #d4a017; }
 
-        /* Nav links */
-        .gs-nav-link {
+        .nx-nav-link {
           position: relative;
+          font-family: 'Plus Jakarta Sans', sans-serif;
           font-size: 0.875rem;
-          font-weight: 500;
-          color: rgba(255,255,255,0.82) !important;
+          font-weight: 600;
+          color: rgba(255,255,255,0.72) !important;
           text-decoration: none;
-          padding: 0.45rem 0.15rem !important;
-          letter-spacing: 0.03em;
-          transition: color 0.2s;
+          padding: 0.5rem 0.85rem !important;
+          border-radius: 8px;
+          transition: color 0.2s, background 0.2s;
           background: none;
           border: none;
           cursor: pointer;
           display: flex;
           align-items: center;
-          gap: 0.25rem;
+          gap: 0.3rem;
         }
-        .gs-nav-link::after {
-          content: '';
-          position: absolute;
-          bottom: -1px;
-          left: 0; right: 0;
-          height: 2px;
-          background: linear-gradient(90deg, #b8860b, #d4a017);
-          border-radius: 2px;
-          transform: scaleX(0);
-          transition: transform 0.22s ease;
-        }
-        .gs-nav-link:hover { color: #d4a017 !important; }
-        .gs-nav-link:hover::after,
-        .gs-nav-link.active::after { transform: scaleX(1); }
-        .gs-nav-link.active { color: #d4a017 !important; }
+        .nx-nav-link:hover { color: #fff !important; background: rgba(255,255,255,0.06); }
+        .nx-nav-link.active { color: #38bdf8 !important; background: rgba(56,189,248,0.1); }
 
-        /* Separator */
-        .gs-sep {
-          width: 1px;
-          height: 18px;
-          background: rgba(184,134,11,0.3);
-        }
-
-        /* Dropdown */
-        .gs-dropdown {
+        .nx-dropdown {
           position: absolute;
-          top: calc(100% + 12px);
-          left: 50%;
-          transform: translateX(-50%);
-          min-width: 165px;
-          background: #1a1209;
-          border-radius: 10px;
-          box-shadow: 0 10px 35px rgba(0,0,0,0.45);
+          top: calc(100% + 10px);
+          left: 0;
+          min-width: 190px;
+          background: #0f1f38;
+          border-radius: 12px;
+          box-shadow: 0 16px 40px rgba(0,0,0,0.45);
           overflow: hidden;
-          animation: fadeDown 0.18s ease;
-          border: 1px solid rgba(184,134,11,0.22);
+          animation: nxFade 0.16s ease;
+          border: 1px solid rgba(56,189,248,0.18);
+          padding: 0.4rem;
         }
-        @keyframes fadeDown {
-          from { opacity:0; transform:translateX(-50%) translateY(-8px); }
-          to   { opacity:1; transform:translateX(-50%) translateY(0); }
+        @keyframes nxFade {
+          from { opacity:0; transform:translateY(-6px); }
+          to   { opacity:1; transform:translateY(0); }
         }
-        .gs-dropdown a {
-          display: block;
-          padding: 0.7rem 1.1rem;
+        .nx-dropdown a {
+          display: flex;
+          align-items: center;
+          gap: 0.55rem;
+          padding: 0.65rem 0.8rem;
           font-size: 0.85rem;
           font-weight: 500;
-          color: rgba(255,255,255,0.78);
+          color: rgba(255,255,255,0.75);
           text-decoration: none;
+          border-radius: 8px;
           transition: background 0.15s, color 0.15s;
         }
-        .gs-dropdown a:hover,
-        .gs-dropdown a.active {
-          background: rgba(184,134,11,0.14);
-          color: #d4a017;
+        .nx-dropdown a:hover,
+        .nx-dropdown a.active {
+          background: rgba(56,189,248,0.12);
+          color: #38bdf8;
         }
-        .gs-dropdown-divider {
-          height: 1px;
-          background: rgba(184,134,11,0.15);
-          margin: 0;
-        }
-        .gs-chevron {
-          font-size: 0.58rem;
+        .nx-chevron {
+          font-size: 0.6rem;
           transition: transform 0.2s;
           display: inline-block;
-          margin-left: 2px;
-          color: #d4a017;
         }
-        .gs-chevron.open { transform: rotate(180deg); }
+        .nx-chevron.open { transform: rotate(180deg); }
 
-        /* Book Now button */
-        .gs-book-btn {
+        .nx-book-btn {
           display: inline-flex;
           align-items: center;
-          gap: 0.4rem;
-          background: linear-gradient(135deg, #b8860b, #d4a017);
+          gap: 0.45rem;
+          background: linear-gradient(135deg, #2563eb, #38bdf8);
           color: #fff !important;
-          font-size: 0.8rem;
-          font-weight: 600;
-          letter-spacing: 0.07em;
-          text-transform: uppercase;
-          padding: 0.52rem 1.3rem;
-          border-radius: 6px;
+          font-family: 'Plus Jakarta Sans', sans-serif;
+          font-size: 0.85rem;
+          font-weight: 700;
+          padding: 0.6rem 1.4rem;
+          border-radius: 9px;
           text-decoration: none;
-          transition: opacity 0.2s, transform 0.15s, box-shadow 0.2s;
-          box-shadow: 0 3px 12px rgba(184,134,11,0.4);
+          transition: transform 0.15s, box-shadow 0.2s, filter 0.2s;
+          box-shadow: 0 4px 18px rgba(37,99,235,0.4);
         }
-        .gs-book-btn:hover {
-          opacity: 0.9;
-          transform: translateY(-1px);
-          box-shadow: 0 6px 20px rgba(184,134,11,0.5);
+        .nx-book-btn:hover {
+          transform: translateY(-2px);
+          box-shadow: 0 8px 26px rgba(37,99,235,0.55);
+          filter: brightness(1.08);
           color: #fff !important;
         }
 
-        /* Hamburger */
-        .gs-toggler {
+        .nx-toggler {
           display: none;
-          background: none;
-          border: 1.5px solid rgba(184,134,11,0.45);
-          border-radius: 7px;
-          padding: 0.35rem 0.6rem;
+          background: rgba(255,255,255,0.06);
+          border: 1px solid rgba(255,255,255,0.1);
+          border-radius: 8px;
+          padding: 0.4rem 0.65rem;
           cursor: pointer;
-          color: #d4a017;
+          color: #fff;
           font-size: 1.3rem;
           line-height: 1;
-          transition: background 0.2s;
         }
-        .gs-toggler:hover { background: rgba(212,160,23,0.1); }
 
-        /* Mobile */
         @media (max-width: 991px) {
-          .gs-toggler { display: flex; align-items: center; }
-          .gs-nav-wrap {
+          .nx-toggler { display: flex; align-items: center; }
+          .nx-nav-wrap {
             position: absolute;
             top: 100%;
             left: 0; right: 0;
-            background: #120e06;
-            border-top: 1px solid rgba(184,134,11,0.2);
-            box-shadow: 0 12px 30px rgba(0,0,0,0.5);
-            padding: 1rem 1.5rem 1.5rem;
+            background: #0a1628;
+            border-top: 1px solid rgba(255,255,255,0.06);
+            box-shadow: 0 16px 36px rgba(0,0,0,0.5);
+            padding: 1rem 1.25rem 1.5rem;
             display: none;
             flex-direction: column;
-            gap: 0.25rem;
+            gap: 0.3rem;
           }
-          .gs-nav-wrap.open { display: flex; }
-          .gs-nav-link { padding: 0.65rem 0 !important; font-size: 0.95rem; color: rgba(255,255,255,0.85) !important; }
-          .gs-nav-link::after { display: none; }
-          .gs-dropdown {
-            position: static;
-            transform: none;
-            box-shadow: none;
-            border: 1px solid rgba(184,134,11,0.2);
-            border-radius: 8px;
-            margin-top: 0.25rem;
-            animation: none;
-            background: rgba(255,255,255,0.04);
-          }
-          .gs-dropdown a { color: rgba(255,255,255,0.72); }
-          .gs-book-btn { width: 100%; justify-content: center; margin-top: 0.5rem; padding: 0.7rem; }
-          .gs-sep { display: none; }
+          .nx-nav-wrap.open { display: flex; }
+          .nx-nav-link { width: 100%; padding: 0.75rem 0.85rem !important; font-size: 0.95rem; }
+          .nx-dropdown { position: static; box-shadow: none; margin-top: 0.25rem; animation: none; }
+          .nx-book-btn { width: 100%; justify-content: center; margin-top: 0.5rem; padding: 0.8rem; }
         }
       `}</style>
 
-      <header id="gs-navbar" className={scrolled ? 'scrolled' : ''}>
+      <header id="nx-navbar" className={scrolled ? 'scrolled' : ''}>
         <div className="container">
-          <nav style={{ display:'flex', alignItems:'center', justifyContent:'space-between', padding:'0.7rem 0', position:'relative' }}>
+          <nav style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '0.75rem 0', position: 'relative' }}>
 
-            {/* Brand */}
-            <Link to="/" className="gs-brand">
-              <span className="crown">🏰</span>
+            <Link to="/" className="nx-brand">
+              <span className="mark"><i className="bi-building"></i></span>
               <span className="brand-text">
-                <span className="brand-the">The</span>
-                <span className="brand-name">Grand <span>Hotel</span></span>
+                <span className="brand-tag">Hotels &amp; Resorts</span>
+                <span className="brand-name">Nexus</span>
               </span>
             </Link>
 
-            {/* Hamburger */}
-            <button className="gs-toggler" onClick={() => setMenuOpen(o => !o)} aria-label="Toggle menu">
+            <button className="nx-toggler" onClick={() => setMenuOpen(o => !o)} aria-label="Toggle menu">
               <i className={menuOpen ? 'bi-x' : 'bi-list'}></i>
             </button>
 
-            {/* Nav Links */}
-            <div className={`gs-nav-wrap ${menuOpen ? 'open' : ''}`}>
-              <ul style={{ listStyle:'none', margin:0, padding:0, display:'flex', alignItems:'center', gap:'1.75rem', flexWrap:'wrap' }}>
+            <div className={`nx-nav-wrap ${menuOpen ? 'open' : ''}`}>
+              <ul style={{ listStyle: 'none', margin: 0, padding: 0, display: 'flex', alignItems: 'center', gap: '0.4rem', flexWrap: 'wrap' }}>
 
                 <li>
-                  <Link className={`gs-nav-link ${isActive('/') ? 'active' : ''}`} to="/">Home</Link>
+                  <Link className={`nx-nav-link ${isActive('/') ? 'active' : ''}`} to="/">Home</Link>
                 </li>
 
-                <li style={{ position:'relative' }} ref={dropdownRef}>
+                <li style={{ position: 'relative' }} ref={dropdownRef}>
                   <button
-                    className={`gs-nav-link ${isActive('/room-list') || isActive('/room-grid') ? 'active' : ''}`}
+                    className={`nx-nav-link ${isActive('/room-list') || isActive('/room-grid') ? 'active' : ''}`}
                     onClick={() => setRoomsOpen(o => !o)}
                   >
                     Rooms
-                    <span className={`gs-chevron ${roomsOpen ? 'open' : ''}`}>▼</span>
+                    <span className={`nx-chevron ${roomsOpen ? 'open' : ''}`}><i className="bi-chevron-down"></i></span>
                   </button>
                   {roomsOpen && (
-                    <div className="gs-dropdown">
+                    <div className="nx-dropdown">
                       <Link className={isActive('/room-list') ? 'active' : ''} to="/room-list">
-                        🗒 Room List
+                        <i className="bi-list-ul"></i> Room List
                       </Link>
-                      <div className="gs-dropdown-divider" />
                       <Link className={isActive('/room-grid') ? 'active' : ''} to="/room-grid">
-                        ⊞ Room Grid
+                        <i className="bi-grid-3x3-gap"></i> Room Grid
                       </Link>
                     </div>
                   )}
                 </li>
 
                 <li>
-                  <Link className={`gs-nav-link ${isActive('/room-overview') ? 'active' : ''}`} to="/room-overview">
+                  <Link className={`nx-nav-link ${isActive('/room-overview') ? 'active' : ''}`} to="/room-overview">
                     Room Details
                   </Link>
                 </li>
 
-                <li className="gs-sep" aria-hidden />
-
                 <li>
-                  <Link className="gs-book-btn" to="/booking">
+                  {/* <Link className={`nx-nav-link ${isActive('/admin') ? 'active' : ''}`} to="/admin">
+                    Admin
+                  </Link> */}
+                </li>
+
+                <li style={{ marginLeft: '0.5rem' }}>
+                  <Link className="nx-book-btn" to="/booking">
                     <i className="bi-calendar-check"></i> Book Now
                   </Link>
                 </li>
